@@ -3,10 +3,11 @@
 
 import cv2
 
+from robot.RobotCommand import RobotCommand
 from robot.VideoStreaming import VideoStreaming
 
 ROBOT_IP = "192.168.0.226"
-NUM_FRAMES = 10
+NUM_FRAMES = 50
 
 
 
@@ -26,6 +27,10 @@ if __name__ == '__main__':
     client = VideoStreaming()
     frames = []
 
+    # Robot interface
+    cmd = RobotCommand()
+    cmd.connect(ROBOT_IP)
+    cmd.send_wheel_command(0, 1000)
 
     def camera_listener(image):
         # cv2.imshow('video', image)
@@ -37,6 +42,7 @@ if __name__ == '__main__':
 
     client.streaming(ROBOT_IP, listener=camera_listener)
 
+    cmd.disconnect()
     save_video(frames)      # Save video
     client.StopTcpcClient()     # Stop connection
 

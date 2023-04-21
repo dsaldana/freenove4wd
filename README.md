@@ -12,3 +12,8 @@ Make sure to run the server on the robot. Example:
 $ sudo python ~/Freenove_4WD_Smart_Car_Kit_for_Raspberry_Pi/Code/Server/main.py -tn
  ```
 Set the constat ``ROBOT_IP`` with the ip of your robot.
+
+
+
+----
+Note that there is a bug that requires restarting the server everytime there is video streaming.
