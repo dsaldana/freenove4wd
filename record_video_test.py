@@ -30,7 +30,7 @@ if __name__ == '__main__':
     # Robot interface
     cmd = RobotCommand()
     cmd.connect(ROBOT_IP)
-    cmd.send_wheel_command(0, 1000)
+    cmd.send_wheel_command(900, 1000)
 
     def camera_listener(image):
         # cv2.imshow('video', image)
@@ -39,9 +39,10 @@ if __name__ == '__main__':
 
         if len(frames) >= NUM_FRAMES:
             client.running = False
-
-    client.streaming(ROBOT_IP, listener=camera_listener)
-
+    try:
+        client.streaming(ROBOT_IP, listener=camera_listener)
+    except KeyboardInterrupt:
+        cmd.send_wheel_command(0, 0)
     cmd.disconnect()
     save_video(frames)      # Save video
     client.StopTcpcClient()     # Stop connection
